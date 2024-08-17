@@ -1,19 +1,38 @@
 "use client"
 
-import RecipeCard from "@/components/recipe-card"
-import { useTranslations } from "next-intl"
+import MealGroup from "@/components/meal-group"
+import { Meal } from "@/lib/types/Meal.types"
+import supabase from "@/config/supabaseClient"
+import { useEffect, useState } from "react"
 
 export default function Home() {
-  const t = useTranslations("Recipe Card")
+    const [fetchError, setFetchError] = useState<string>("")
+    const [meals, setMeals] = useState<Meal[]>([])
 
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <RecipeCard
-        title="Tomato and Mozzarella Skewers"
-        course="Appetizer"
-        onPrimaryClick={() => console.log("Primary")}
-        onSecondaryClick={() => console.log("Secondary")}
-      />
-    </main>
-  )
+    useEffect(() => {
+        const fetchMeals = async () => {
+            const { data, error } = await supabase
+                .from("recipes_small")
+                .select()
+                .limit(3)
+
+            if (error) {
+                setFetchError("Failed to fetch meals")
+                console.log(error)
+            }
+
+            if (data) {
+                setMeals(data)
+                setFetchError("")
+            }
+        }
+
+        fetchMeals()
+    }, [])
+
+    return (
+        <div className="mx-96">
+            <MealGroup name="Breakfast" meals={meals} />
+        </div>
+    )
 }
