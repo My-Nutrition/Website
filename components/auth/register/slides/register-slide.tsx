@@ -1,17 +1,16 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import React from "react"
 import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import {
     Form,
-    FormControl,
     FormField,
     FormItem,
     FormLabel,
+    FormControl,
     FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import {
     Card,
     CardContent,
@@ -19,66 +18,19 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-
 import { FcGoogle } from "react-icons/fc"
 import Link from "next/link"
+import { registerFormSchema } from "../../../../lib/form-schemes/auth/register.form-schema"
+import { useRouter } from "next/router"
 
-const namePattern = /^[a-zA-Zà-ÿÀ-ß'-\s]+$/
+interface RegisterSlideProps {
+    onSubmit: (values: z.infer<typeof registerFormSchema>) => void
+    form?: any
+}
 
-const formSchema = z.object({
-    firstName: z
-        .string()
-        .min(2, { message: "First name must be at least 2 characters long" })
-        .max(50, { message: "First name can't be longer than 50 characters" })
-        .regex(namePattern, {
-            message:
-                "First name can only contain letters, spaces, hyphens, and apostrophes",
-        }),
-
-    lastName: z
-        .string()
-        .min(2, { message: "Last name must be at least 2 characters long" })
-        .max(50, { message: "Last name can't be longer than 50 characters" })
-        .regex(namePattern, {
-            message:
-                "Last name can only contain letters, spaces, hyphens, and apostrophes",
-        }),
-    email: z
-        .string()
-        .min(5, { message: "Email must be at least 5 characters long" })
-        .max(254, { message: "Email can't be longer than 254 characters" })
-        .email({ message: "Invalid email address" }),
-    password: z
-        .string()
-        .min(8, { message: "Password must be at least 8 characters long" })
-        .max(48, { message: "Password can't be longer than 48 characters" })
-        .regex(/[A-Z]/, {
-            message: "Password must contain at least one uppercase letter",
-        })
-        .regex(/[a-z]/, {
-            message: "Password must contain at least one lowercase letter",
-        })
-        .regex(/\d/, { message: "Password must contain at least one number" })
-        .regex(/[@$!%*?&]/, {
-            message: "Password must contain at least one special character",
-        }),
-})
-
-export const RegisterCard = () => {
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            firstName: "",
-            lastName: "",
-        },
-    })
-
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
-    }
-
+const RegisterSlide: React.FC<RegisterSlideProps> = ({ onSubmit, form }) => {
     return (
-        <Card>
+        <Card className="w-full">
             <CardHeader>
                 <CardTitle className="text-2xl">Register</CardTitle>
                 <CardDescription>
@@ -165,20 +117,24 @@ export const RegisterCard = () => {
                             )}
                         />
 
-                        <div className="space-y-3">
+                        <div className="space-y-2">
                             <Button className="w-full" type="submit">
-                                Submit
+                                Register
                             </Button>
 
-                            <Button className="w-full" variant="outline">
+                            <Button
+                                className="w-full"
+                                variant="outline"
+                                type="button"
+                            >
                                 <FcGoogle className="mr-2 w-4 h-4" />
-                                Login with Google
+                                Register with Google
                             </Button>
 
                             <div className="mt-4 text-center text-sm">
-                                Don&apos;t have an account?{" "}
-                                <Link href="#" className="underline">
-                                    Register
+                                Already have an account?{" "}
+                                <Link href="/login" className="underline">
+                                    Login
                                 </Link>
                             </div>
                         </div>
@@ -188,3 +144,5 @@ export const RegisterCard = () => {
         </Card>
     )
 }
+
+export default RegisterSlide

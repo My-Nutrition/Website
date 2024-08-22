@@ -1,8 +1,12 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
 import { z } from "zod"
-
-import { Button } from "@/components/ui/button"
+import { loginFormSchema } from "../../../../lib/form-schemes/auth/login.form-schema"
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
 import {
     Form,
     FormControl,
@@ -12,60 +16,30 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
-
-import { FcGoogle } from "react-icons/fc"
 import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { FcGoogle } from "react-icons/fc"
 
-const formSchema = z.object({
-    email: z
-        .string()
-        .min(5, { message: "Email must be at least 5 characters long" })
-        .max(254, { message: "Email can't be longer than 254 characters" })
-        .email({ message: "Invalid email address" }),
-    password: z
-        .string()
-        .min(8, { message: "Password must be at least 8 characters long" })
-        .max(48, { message: "Password can't be longer than 48 characters" })
-        .regex(/[A-Z]/, {
-            message: "Password must contain at least one uppercase letter",
-        })
-        .regex(/[a-z]/, {
-            message: "Password must contain at least one lowercase letter",
-        })
-        .regex(/\d/, { message: "Password must contain at least one number" })
-        .regex(/[@$!%*?&]/, {
-            message: "Password must contain at least one special character",
-        }),
-})
+interface LoginSlideProps {
+    onSubmit: (values: z.infer<typeof loginFormSchema>) => void
+    onForgotPassword: () => void
+    form?: any
+}
 
-export const LoginCard = () => {
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            email: "",
-            password: "",
-        },
-    })
-
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
-    }
-
+const LoginSlide: React.FC<LoginSlideProps> = ({
+    onSubmit,
+    onForgotPassword,
+    form,
+}) => {
     return (
-        <Card>
+        <Card className="">
             <CardHeader>
                 <CardTitle className="text-2xl">Login</CardTitle>
                 <CardDescription>
                     Enter your email below to login to your account
                 </CardDescription>
             </CardHeader>
+
             <CardContent className="w-full">
                 <Form {...form}>
                     <form
@@ -99,6 +73,7 @@ export const LoginCard = () => {
                                         <Link
                                             href="#"
                                             className="flex w-full justify-end text-sm underline"
+                                            onClick={onForgotPassword}
                                         >
                                             Forgot your password?
                                         </Link>
@@ -113,19 +88,23 @@ export const LoginCard = () => {
                                 </FormItem>
                             )}
                         />
-                        <div className="space-y-3">
+                        <div className="space-y-2">
                             <Button className="w-full" type="submit">
                                 Submit
                             </Button>
 
-                            <Button className="w-full" variant="outline">
+                            <Button
+                                className="w-full"
+                                variant="outline"
+                                type="button"
+                            >
                                 <FcGoogle className="mr-2 w-4 h-4" />
                                 Login with Google
                             </Button>
 
                             <div className="mt-4 text-center text-sm">
                                 Don&apos;t have an account?{" "}
-                                <Link href="#" className="underline">
+                                <Link href="/register" className="underline">
                                     Register
                                 </Link>
                             </div>
@@ -136,3 +115,5 @@ export const LoginCard = () => {
         </Card>
     )
 }
+
+export default LoginSlide
