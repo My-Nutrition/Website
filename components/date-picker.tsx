@@ -7,6 +7,7 @@ import { DateRange } from "react-day-picker"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
+import { WeekDisplay } from "@/components/week-display"
 import {
   Popover,
   PopoverContent,
@@ -58,6 +59,7 @@ export function DatePickerWithRange({
           />
         </PopoverContent>
       </Popover>
+      {date?.from && <WeekDisplay startDate={date.from} />}
     </div>
   )
 }
