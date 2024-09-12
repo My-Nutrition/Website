@@ -7,31 +7,31 @@ import { DateRange } from "react-day-picker"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
-import WeekDisplay from "@/components/week-display"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { WeekDisplay } from "./week-display"
 
-export function DatePickerWithRange({
+export function DateRangePicker({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: new Date(2022, 0, 20),
     to: addDays(new Date(2022, 0, 20), 6),
   })
-  console.log("date", date?.from, "date.to ", date?.to)
+
   return (
     <div className={cn("grid gap-2", className)}>
-      {date?.from && <WeekDisplay startDate={date.from} />}
+      <WeekDisplay startDate={date?.from || new Date()} />
       <Popover>
         <PopoverTrigger asChild>
           <Button
             id="date"
             variant={"outline"}
             className={cn(
-              "w-[300px] justify-start text-left font-normal",
+              "w-fit justify-start text-left font-normal",
               !date && "text-muted-foreground",
             )}
           >
@@ -57,23 +57,23 @@ export function DatePickerWithRange({
             selected={date}
             onSelect={(range) => {
               if (range?.from) {
-                const newTo = addDays(range.from, 6);
+                const newTo = addDays(range.from, 6)
                 if (range.to && (range.to < range.from || range.to > newTo)) {
                   setDate({
                     from: range.from,
                     to: newTo,
-                  });
+                  })
                 } else {
                   setDate({
                     from: range.from,
                     to: addDays(range.from, 6),
-                  });
+                  })
                 }
               } else {
-                setDate(undefined);
+                setDate(undefined)
               }
             }}
-            numberOfMonths={2}
+            numberOfMonths={1}
           />
         </PopoverContent>
       </Popover>
