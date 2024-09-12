@@ -21,9 +21,10 @@ export function DatePickerWithRange({
     from: new Date(2022, 0, 20),
     to: addDays(new Date(2022, 0, 20), 6),
   })
-
+  console.log("date", date?.from, "date.to ", date?.to)
   return (
     <div className={cn("grid gap-2", className)}>
+      {date?.from && <WeekDisplay startDate={date.from} />}
       <Popover>
         <PopoverTrigger asChild>
           <Button
@@ -59,7 +60,6 @@ export function DatePickerWithRange({
           />
         </PopoverContent>
       </Popover>
-      {date?.from && <WeekDisplay startDate={date.from} />}
     </div>
   )
 }
