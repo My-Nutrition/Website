@@ -27,28 +27,54 @@ export function DateRangePicker({
       <WeekDisplay startDate={date?.from || new Date()} />
       <Popover>
         <PopoverTrigger asChild>
-          <Button
-            id="date"
-            variant={"outline"}
-            className={cn(
-              "w-fit justify-start text-left font-normal",
-              !date && "text-muted-foreground",
-            )}
-          >
-            <CalendarIcon className="mr-2 h-4 w-4" />
-            {date?.from ? (
-              date.to ? (
-                <>
-                  {format(date.from, "LLL dd, y")} -{" "}
-                  {format(date.to, "LLL dd, y")}
-                </>
+          <div className="flex items-center">
+            <ChevronLeft
+              className="h-4 w-4 cursor-pointer"
+              onClick={() => {
+                if (date?.from) {
+                  const newFrom = addDays(date.from, -7)
+                  setDate({
+                    from: newFrom,
+                    to: addDays(newFrom, 6),
+                  })
+                }
+              }}
+            />
+            <Button
+              id="date"
+              variant={"outline"}
+              className={cn(
+                "w-fit justify-start text-left font-normal",
+                !date && "text-muted-foreground",
+              )}
+            >
+              <CalendarIcon className="mr-2 h-4 w-4" />
+              {date?.from ? (
+                date.to ? (
+                  <>
+                    {format(date.from, "LLL dd, y")} -{" "}
+                    {format(date.to, "LLL dd, y")}
+                  </>
+                ) : (
+                  format(date.from, "LLL dd, y")
+                )
               ) : (
-                format(date.from, "LLL dd, y")
-              )
-            ) : (
-              <span>Pick a date</span>
-            )}
-          </Button>
+                <span>Pick a date</span>
+              )}
+            </Button>
+            <ChevronRight
+              className="h-4 w-4 cursor-pointer"
+              onClick={() => {
+                if (date?.from) {
+                  const newFrom = addDays(date.from, 7)
+                  setDate({
+                    from: newFrom,
+                    to: addDays(newFrom, 6),
+                  })
+                }
+              }}
+            />
+          </div>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
