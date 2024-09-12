@@ -17,14 +17,14 @@ function Calendar({
 }: CalendarProps) {
   const handleSelect = (range: DateRange | undefined) => {
     if (range && range.from && range.to) {
-      const diffTime = Math.abs(range.to.getTime() - range.from.getTime());
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+      const diffTime = Math.abs(range.to.getTime() - range.from.getTime())
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1
       if (diffDays > 7) {
-        return;
+        return
       }
     }
-    props.onSelect?.(range);
-  };
+    props.onSelect?.(range)
+  }
 
   return (
     <DayPicker
@@ -63,10 +63,6 @@ function Calendar({
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
         ...classNames,
-      }}
-      components={{
-        IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
-        IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
       }}
       onSelect={handleSelect}
       modifiersClassNames={{
