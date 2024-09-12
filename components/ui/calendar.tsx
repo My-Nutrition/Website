@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { DayPicker, SelectionState } from "react-day-picker"
+import { DayPicker } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
@@ -34,25 +34,22 @@ function Calendar({
         table: "w-full border-collapse space-y-1",
         weekdays: "flex justify-between mb-2", // Align weekdays in a row above the month days
         weekday:
-          "w-9 text-center font-semibold text-[0.9rem] text-muted-foreground dark:text-gray-300",
+          "w-9 text-center font-semibold text-[0.9rem] text-muted-foreground",
         row: "flex w-full",
         cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
         day: cn(
-          buttonVariants({ variant: "outline" }),
-          "h-9 w-9 p-0 font-normal aria-selected:opacity-100 dark:text-gray-200",
+          buttonVariants({ variant: "ghost" }),
+          "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
         ),
-        [SelectionState.range_start]: "bg-blue-500 text-white rounded-l-md", // Highlight start of range
-        [SelectionState.range_end]: "bg-blue-500 text-white rounded-r-md", // Highlight end of range
-        [SelectionState.selected]:
-          "bg-blue-150 font-bold border border-blue-600", // Pronounced selected day
-        [SelectionState.range_middle]: "bg-blue-300 text-blue-900", // Less pronounced middle of the range
-        day_today: "bg-blue-200 text-blue-900", // Highlight today's date
+        day_range_end: "day-range-end",
+        day_selected:
+          "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+        day_today: "bg-accent text-accent-foreground",
         day_outside:
-          "day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30 dark:text-gray-400",
-        day_disabled:
-          "text-muted-foreground opacity-50 dark:text-gray-500 dark:opacity-40",
+          "day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30",
+        day_disabled: "text-muted-foreground opacity-50",
         day_range_middle:
-          "aria-selected:bg-accent aria-selected:text-accent-foreground dark:bg-blue-600 dark:text-gray-300",
+          "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
         ...classNames,
       }}
