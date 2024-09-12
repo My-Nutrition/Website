@@ -13,6 +13,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { WeekDisplay } from "@/components/week-display";
+
 export function DatePickerWithRange({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
@@ -59,6 +61,7 @@ export function DatePickerWithRange({
           />
         </PopoverContent>
       </Popover>
+      <WeekDisplay startDate={date?.from || new Date()} />
     </div>
   )
 }
