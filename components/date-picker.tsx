@@ -55,7 +55,24 @@ export function DatePickerWithRange({
             mode="range"
             defaultMonth={date?.from}
             selected={date}
-            onSelect={setDate}
+            onSelect={(range) => {
+              if (range?.from) {
+                const newTo = addDays(range.from, 6);
+                if (range.to && (range.to < range.from || range.to > newTo)) {
+                  setDate({
+                    from: range.from,
+                    to: newTo,
+                  });
+                } else {
+                  setDate({
+                    from: range.from,
+                    to: addDays(range.from, 6),
+                  });
+                }
+              } else {
+                setDate(undefined);
+              }
+            }}
             numberOfMonths={2}
           />
         </PopoverContent>
