@@ -5,7 +5,7 @@ interface WeekDisplayProps {
   startDate: Date;
 }
 
-export function WeekDisplay({ startDate }: WeekDisplayProps) {
+export const WeekDisplay: React.FC<WeekDisplayProps> = ({ startDate }) => {
   const days = Array.from({ length: 7 }, (_, i) =>
     addDays(startOfWeek(startDate, { weekStartsOn: 0 }), i)
   );
