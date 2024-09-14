@@ -66,8 +66,9 @@ function Calendar({
         day_hidden: "invisible",
         ...classNames,
       }}
+      mode="range"
       selected={selectedRange}
-      onSelect={handleSelect}
+      onSelect={setSelectedRange}
       modifiersClassNames={{
         selected: "bg-green-500 text-white",
       }}
