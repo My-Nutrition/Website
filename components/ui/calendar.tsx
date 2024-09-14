@@ -15,17 +15,19 @@ function Calendar({
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
-  const handleSelect = (range: DateRange | undefined) => {
-    if (range && range.from && range.to) {
-      const diffTime = Math.abs(range.to.getTime() - range.from.getTime())
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1
-      if (diffDays > 7) {
-        return
+  const handleSelect = (selectedDate: Date | undefined) => {
+    if (selectedDate) {
+      const range = {
+        from: selectedDate,
+        to: new Date(
+          selectedDate.getFullYear(),
+          selectedDate.getMonth(),
+          selectedDate.getDate() + 6,
+        ), // Set 7-day range
       }
+      props.onSelect?.(range)
     }
-    props.onSelect?.(range)
   }
-
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
