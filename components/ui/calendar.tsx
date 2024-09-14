@@ -2,7 +2,8 @@
 
 import * as React from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { DayPicker, DateRange } from "react-day-picker"
+import { DayPicker } from "react-day-picker"
+import { useState } from "react"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
@@ -15,19 +16,18 @@ function Calendar({
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
+  const [selectedRange, setSelectedRange] = useState<{ from: Date; to: Date } | undefined>(undefined);
+
   const handleSelect = (selectedDate: Date | undefined) => {
     if (selectedDate) {
       const range = {
         from: selectedDate,
-        to: new Date(
-          selectedDate.getFullYear(),
-          selectedDate.getMonth(),
-          selectedDate.getDate() + 6,
-        ), // Set 7-day range
-      }
-      props.onSelect?.(range)
+        to: new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate() + 6),
+      };
+      setSelectedRange(range);
+      props.onSelect?.(range);
     }
-  }
+  };
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -66,6 +66,7 @@ function Calendar({
         day_hidden: "invisible",
         ...classNames,
       }}
+      selected={selectedRange}
       onSelect={handleSelect}
       modifiersClassNames={{
         selected: "bg-green-500 text-white",
