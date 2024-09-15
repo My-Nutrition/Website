@@ -1,7 +1,7 @@
 "use client"
 
-import { DateRangePicker } from "@/components/date-picker"
-import RecipeCard from "@/components/recipe-card"
+import { DateRangePicker } from "@/components/date-picker/date-picker"
+import RecipeCard from "@/components/recipe/recipe-card"
 import { useTranslations } from "next-intl"
 
 export default function Home() {

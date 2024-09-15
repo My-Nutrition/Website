@@ -1,0 +1,168 @@
+
+# 2024-09-11 12:44:16.845470
++npx shadcn@latest add popover
++ Checking registry.
++ Installing dependencies.
++Something went wrong. Please check the error below for more details.    
++If the problem persists, please open an issue on GitHub.
++
++Command failed with exit code 255: bun add @radix-ui/react-popover      
++error: could not find bin metadata file
++
++Bun failed to remap this bin to its proper location within node_modules.
++This is an indication of a corrupted node_modules directory.
++
++Please run 'bun install --force' in the project root and try
++it again. If this message persists, please open an issue:
++https://github.com/oven-sh/bun/issues
+
+# 2024-09-11 12:44:49.402626
++/run bun install --force
+
+# 2024-09-12 22:45:54.598911
++create a component that displays 7 days Sun to Mon based on the range picked in the date picker component, the component should display the 7 boxes each box represents the day on the week, the day should be displayed below the number
+
+# 2024-09-12 22:49:18.719336
++edit the calendar.tsx
+
+# 2024-09-12 22:50:51.208686
++edit calendar.tsx so that the range of selected days is colored green, and only a maximum of 7 days can be selected 
+
+# 2024-09-12 22:53:17.255812
++weeks of displa should be baswed on the daterangepicker
+
+# 2024-09-12 22:54:20.903183
++show the entire date-picker component
+
+# 2024-09-12 22:56:59.185001
++add week-display to the date-picker component
+
+# 2024-09-12 23:04:08.577549
++when the user clicks on a from date, the range should automatically fill the next 7 days 
+
+# 2024-09-12 23:14:43.937342
++if they click on a day outside of the range then the range should update
+
+# 2024-09-12 23:18:32.032990
++/discard
+
+# 2024-09-12 23:18:35.216715
++discard
+
+# 2024-09-12 23:18:45.784590
++/undo 
+
+# 2024-09-12 23:18:47.128984
++/undo
+
+# 2024-09-12 23:19:00.336661
++/git reset --hard HEAD
+
+# 2024-09-12 23:19:29.768262
++/git reset --hard HEAD^
+
+# 2024-09-12 23:19:37.472280
++/undo
+
+# 2024-09-12 23:23:48.665610
++/redo
+
+# 2024-09-12 23:23:59.984080
++add all the changes you undid
+
+# 2024-09-12 23:25:15.529158
++Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
++
++Check the render method of `Home`.
+
+# 2024-09-12 23:42:23.234087
++the iconLeft and iconRight in the calender should be on either side of the button component in the popover, so that if the use clicks right or left then it would move one week in ahead or behind
+
+# 2024-09-12 23:45:06.145462
++update all imports for date-picker and week-display
+
+# 2024-09-12 23:45:43.554095
++/undo
+
+# 2024-09-12 23:59:17.970030
++the range must update also when the user clicks on a date that is beyond the newTo or date.to
+
+# 2024-09-12 23:59:39.840755
++/undo
+
+# 2024-09-14 00:54:23.313448
++the weekdays should display the from all the the way to the to date 
+
+# 2024-09-14 00:59:24.840803
++/undo
+
+# 2024-09-14 01:00:00.457304
++edit the week-display.tsx so that it displays the from and to date set in the date picker
+
+# 2024-09-14 01:21:50.626618
++I have a React project using react-day-picker for date selection, and I'm trying to highlight a 7-day range starting from the date the user selects. The DayPicker component should display a 7-day range when a user clicks a date, and this range should be highlighted in the calendar.
++
++However, the range is not being highlighted properly.
++
++Heres the current setup:
++
++The Calendar component wraps the DayPicker and manages the rendering.
++I'm using the onSelect function to handle date selection, which should create a range of 7 days starting from the selected date.
++The CSS classes for highlighting, like day-selected and day-range-middle, are in place but not functioning as expected.
+
+# 2024-09-14 01:24:32.841400
++switch the calendar to range mode
+
+# 2024-09-15 00:42:08.686894
++for the components\ui\calendar.tsx thee day should not highlight twice
+
+# 2024-09-15 00:44:59.710221
++modify the date-picker so that the week is automatically picked when a day is picked similar to this import React, { useState } from "react";
++
++import { endOfWeek, startOfWeek } from "date-fns";
++import { DateRange, DayPicker, isDateInRange } from "react-day-picker";
++
++/** Select the whole week when the day is clicked. */
++export function CustomWeek() {
++  const [selectedWeek, setSelectedWeek] = useState<DateRange | undefined>();
++
++  return (
++    <DayPicker
++      showWeekNumber
++      showOutsideDays
++      modifiers={{
++        selected: selectedWeek,
++        range_start: selectedWeek?.from,
++        range_end: selectedWeek?.to,
++        range_middle: (date: Date) =>
++          selectedWeek
++            ? isDateInRange(date, selectedWeek, { excludeEnds: true })
++            : false
++      }}
++      onDayClick={(day, modifiers) => {
++        if (modifiers.selected) {
++          setSelectedWeek(undefined); // clear the selection if the day is already selected
++          return;
++        }
++        setSelectedWeek({
++          from: startOfWeek(day),
++          to: endOfWeek(day)
++        });
++      }}
++      footer={
++        selectedWeek &&
++        `Week from ${selectedWeek?.from?.toLocaleDateString()} to
++            ${selectedWeek?.to?.toLocaleDateString()}`
++      }
++    />
++  );
++}
+
+# 2024-09-15 00:46:15.118949
++/undo
+
+# 2024-09-15 00:46:46.518866
++/reset
+
+# 2024-09-15 00:46:51.726020
++/undo
